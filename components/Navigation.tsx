@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/contexts/AuthContext";
 import { CheckCircle, LogOut, Loader2 } from "lucide-react";
 
@@ -81,9 +82,11 @@ export default function Navigation() {
                      {/* User Avatar */}
                      <div className="relative">
                        {user.user_metadata?.avatar_url ? (
-                         <img
+                         <Image
                            src={user.user_metadata.avatar_url}
                            alt={userName}
+                           width={32}
+                           height={32}
                            className="w-8 h-8 rounded-full object-cover border-2 border-gray-200"
                          />
                        ) : (

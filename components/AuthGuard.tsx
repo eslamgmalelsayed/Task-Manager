@@ -108,7 +108,7 @@ export default function AuthGuard({
         <div className="text-center">
           <AlertCircle className="w-12 h-12 text-blue-500 mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Already Logged In</h2>
-          <p className="text-gray-600 mb-4">You're already authenticated.</p>
+          <p className="text-gray-600 mb-4">You&apos;re already authenticated.</p>
           <button
             onClick={() => router.push('/')}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors cursor-pointer"

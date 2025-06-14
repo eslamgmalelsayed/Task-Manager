@@ -4,9 +4,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  
-  // Disable SWC minify for better compatibility
-  swcMinify: false,
 }
 
 module.exports = nextConfig 

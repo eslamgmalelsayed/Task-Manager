@@ -8,10 +8,7 @@ import {
   Search,
   Edit2,
   Trash2,
-  Check,
-  X,
   Calendar,
-  Filter,
   ListTodo,
   CheckCircle2,
   Circle,
@@ -21,7 +18,7 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/contexts/AuthContext";
 import AuthGuard from "@/components/AuthGuard";
 import Navigation from "@/components/Navigation";
-import { createTodoSchema, CreateTodoFormData, TodoWithStatus, TodoStatus } from "@/types/todo";
+import { createTodoSchema } from "@/types/todo";
 
 type FilterType = "all" | "active" | "completed";
 
@@ -68,7 +65,7 @@ export default function TodosPage() {
     if (user) {
       loadTodos();
     }
-  }, [user]);
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadTodos = async () => {
     try {
@@ -481,7 +478,7 @@ export default function TodosPage() {
                   </h3>
                 </div>
                 <p className="text-gray-600 mb-6">
-                  Are you sure you want to delete "<strong>{deletingTodo.title}</strong>"? This action cannot be undone.
+                  Are you sure you want to delete &quot;<strong>{deletingTodo.title}</strong>&quot;? This action cannot be undone.
                 </p>
                 <div className="flex gap-3">
                   <button

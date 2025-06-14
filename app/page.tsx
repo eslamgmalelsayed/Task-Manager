@@ -7,8 +7,6 @@ import {
   Calendar,
   Users,
   BarChart3,
-  Menu,
-  X,
   Zap,
   Smartphone,
   ListTodo,
@@ -117,7 +115,7 @@ function TodoStatsSection() {
     } else {
       setLoading(false);
     }
-  }, [user]);
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadTodoStats = async () => {
     try {
