@@ -53,6 +53,24 @@ export default function RegisterPage() {
     setAuthError(null);
 
     try {
+      // First, check if email already exists using our API
+      const checkResponse = await fetch('/api/auth/check-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: data.email }),
+      });
+
+      if (checkResponse.ok) {
+        const checkResult = await checkResponse.json();
+        if (checkResult.exists) {
+          setAuthError("An account with this email address already exists. Please use a different email or try signing in.");
+          return;
+        }
+      }
+      // If the check fails, we'll continue with registration and let Supabase handle it
+
       const { data: authData, error } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
@@ -64,18 +82,41 @@ export default function RegisterPage() {
       });
 
       if (error) {
-        setAuthError(error.message);
+        console.error("Supabase registration error:", error);
+        
+        // Handle specific error types for duplicate emails
+        if (error.message.toLowerCase().includes('user already registered') || 
+            error.message.toLowerCase().includes('email already') ||
+            error.message.toLowerCase().includes('already exists') ||
+            error.message.toLowerCase().includes('email address not confirmed') ||
+            error.message.toLowerCase().includes('email not confirmed')) {
+          setAuthError("An account with this email address already exists. Please use a different email or try signing in.");
+        } else {
+          setAuthError(error.message);
+        }
         return;
       }
 
-      if (authData.user) {
+      // Check if user was created but not confirmed (common case)
+      if (authData.user && !authData.user.email_confirmed_at) {
         // Store email for verification page
         localStorage.setItem("registrationEmail", data.email);
-        // Redirect to verification page or dashboard
+        // Redirect to verification page
         router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
+      } else if (authData.user) {
+        // User is already confirmed, redirect to home
+        router.push("/");
+      } else {
+        setAuthError("Registration failed. Please try again.");
       }
-    } catch {
-      setAuthError("An unexpected error occurred. Please try again.");
+    } catch (error: any) {
+      console.error("Registration error:", error);
+      if (error?.message?.toLowerCase().includes('email already') || 
+          error?.message?.toLowerCase().includes('already exists')) {
+        setAuthError("An account with this email address already exists. Please use a different email or try signing in.");
+      } else {
+        setAuthError("An unexpected error occurred. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }

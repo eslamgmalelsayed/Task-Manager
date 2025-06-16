@@ -61,6 +61,9 @@ Create a `.env.local` file in the project root:
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_SECRET_KEY=your_supabase_anon_key
+
+# Optional: For enhanced email uniqueness checking (recommended)
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 ```
 
 ### Installation

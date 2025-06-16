@@ -2,29 +2,6 @@
 export type Database = {
     public: {
         Tables: {
-            profiles: {
-                Row: {
-                    id: string
-                    full_name: string | null
-                    avatar_url: string | null
-                    created_at: string
-                    updated_at: string
-                }
-                Insert: {
-                    id: string
-                    full_name?: string | null
-                    avatar_url?: string | null
-                    created_at?: string
-                    updated_at?: string
-                }
-                Update: {
-                    id?: string
-                    full_name?: string | null
-                    avatar_url?: string | null
-                    created_at?: string
-                    updated_at?: string
-                }
-            }
             todos: {
                 Row: {
                     id: string
@@ -65,10 +42,6 @@ export type Database = {
 }
 
 // Helper types for database operations
-export type Profile = Database['public']['Tables']['profiles']['Row']
-export type ProfileInsert = Database['public']['Tables']['profiles']['Insert']
-export type ProfileUpdate = Database['public']['Tables']['profiles']['Update']
-
 export type Todo = Database['public']['Tables']['todos']['Row']
 export type TodoInsert = Database['public']['Tables']['todos']['Insert']
 export type TodoUpdate = Database['public']['Tables']['todos']['Update'] 
