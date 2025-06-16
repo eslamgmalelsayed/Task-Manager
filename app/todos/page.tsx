@@ -70,7 +70,7 @@ export default function TodosPage() {
   const loadTodos = async () => {
     try {
       setLoading(true);
-      
+
       const { data, error } = await supabase
         .from("todos")
         .select("*")
@@ -98,7 +98,7 @@ export default function TodosPage() {
       ]);
 
       if (error) throw error;
-      
+
       reset();
       setIsAddingTodo(false);
       loadTodos();
@@ -118,7 +118,7 @@ export default function TodosPage() {
         .eq("id", editingTodo.id);
 
       if (error) throw error;
-      
+
       resetEdit();
       setEditingTodo(null);
       loadTodos();
@@ -132,9 +132,9 @@ export default function TodosPage() {
     try {
       const { error } = await supabase
         .from("todos")
-        .update({ 
+        .update({
           completed: !todo.completed,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq("id", todo.id);
 
@@ -156,7 +156,7 @@ export default function TodosPage() {
         .eq("id", deletingTodo.id);
 
       if (error) throw error;
-      
+
       setDeletingTodo(null);
       loadTodos();
     } catch (error) {
@@ -171,14 +171,16 @@ export default function TodosPage() {
   };
 
   // Filter todos
-  const filteredTodos = todos.filter((todo) => {
-    const matchesFilter = 
-      filter === "all" || 
-      (filter === "active" && !todo.completed) || 
+  const filteredTodos = todos.filter(todo => {
+    const matchesFilter =
+      filter === "all" ||
+      (filter === "active" && !todo.completed) ||
       (filter === "completed" && todo.completed);
-    
-    const matchesSearch = todo.title.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
+    const matchesSearch = todo.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
     return matchesFilter && matchesSearch;
   });
 
@@ -214,7 +216,7 @@ export default function TodosPage() {
     <AuthGuard>
       <div className="min-h-screen bg-gray-50">
         <Navigation />
-        
+
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
@@ -246,7 +248,9 @@ export default function TodosPage() {
                       autoFocus
                     />
                     {errors.title && (
-                      <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {errors.title.message}
+                      </p>
                     )}
                   </div>
                   <div className="flex gap-3">
@@ -284,7 +288,7 @@ export default function TodosPage() {
                     type="text"
                     placeholder="Search todos..."
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={e => setSearchTerm(e.target.value)}
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
@@ -332,21 +336,19 @@ export default function TodosPage() {
               <div className="p-12 text-center">
                 <ListTodo className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  {searchTerm || filter !== "all" 
+                  {searchTerm || filter !== "all"
                     ? "No todos found"
-                    : "No todos yet"
-                  }
+                    : "No todos yet"}
                 </h3>
                 <p className="text-gray-600">
                   {searchTerm || filter !== "all"
                     ? "Try adjusting your search or filter"
-                    : "Add your first todo to get started"
-                  }
+                    : "Add your first todo to get started"}
                 </p>
               </div>
             ) : (
               <div className="divide-y divide-gray-200">
-                {filteredTodos.map((todo) => (
+                {filteredTodos.map(todo => (
                   <div
                     key={todo.id}
                     className="p-6 hover:bg-gray-50 transition-colors"
@@ -426,7 +428,10 @@ export default function TodosPage() {
                 <h3 className="text-lg font-medium text-gray-900 mb-4">
                   Edit Todo
                 </h3>
-                <form onSubmit={handleSubmitEdit(onEditSubmit)} className="space-y-4">
+                <form
+                  onSubmit={handleSubmitEdit(onEditSubmit)}
+                  className="space-y-4"
+                >
                   <div>
                     <input
                       {...registerEdit("title")}
@@ -436,7 +441,9 @@ export default function TodosPage() {
                       autoFocus
                     />
                     {editErrors.title && (
-                      <p className="mt-1 text-sm text-red-600">{editErrors.title.message}</p>
+                      <p className="mt-1 text-sm text-red-600">
+                        {editErrors.title.message}
+                      </p>
                     )}
                   </div>
                   <div className="flex gap-3 pt-4">
@@ -478,7 +485,9 @@ export default function TodosPage() {
                   </h3>
                 </div>
                 <p className="text-gray-600 mb-6">
-                  Are you sure you want to delete &quot;<strong>{deletingTodo.title}</strong>&quot;? This action cannot be undone.
+                  Are you sure you want to delete &quot;
+                  <strong>{deletingTodo.title}</strong>&quot;? This action
+                  cannot be undone.
                 </p>
                 <div className="flex gap-3">
                   <button

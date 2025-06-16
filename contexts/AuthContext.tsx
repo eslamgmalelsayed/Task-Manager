@@ -46,14 +46,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Get initial session
     const getInitialSession = async () => {
       try {
-        const { data: { session: initialSession }, error } = await supabase.auth.getSession();
-        
+        const {
+          data: { session: initialSession },
+          error,
+        } = await supabase.auth.getSession();
+
         if (error) {
           console.error("Error getting session:", error);
         } else {
           setSession(initialSession);
           setUser(initialSession?.user ?? null);
-          
+
           // Clean URL after getting session
           cleanUrl();
         }
@@ -67,39 +70,42 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     getInitialSession();
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, currentSession) => {
-        console.log("Auth state changed:", event, currentSession?.user?.email);
-        
-        setSession(currentSession);
-        setUser(currentSession?.user ?? null);
-        setLoading(false);
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
+      console.log("Auth state changed:", event, currentSession?.user?.email);
 
-        // Clean URL on auth state changes
-        cleanUrl();
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
+      setLoading(false);
 
-        // Handle different auth events
-        switch (event) {
-          case "SIGNED_IN":
-            if (currentSession?.user) {
-              // Only redirect if we're on auth pages, but not password reset pages
-              const currentPath = window.location.pathname;
-              if (currentPath.includes('/login') || currentPath.includes('/register')) {
-                router.push("/");
-              }
-              // Don't redirect if user is on forgot-password or reset-password pages
-              // These pages handle their own navigation
+      // Clean URL on auth state changes
+      cleanUrl();
+
+      // Handle different auth events
+      switch (event) {
+        case "SIGNED_IN":
+          if (currentSession?.user) {
+            // Only redirect if we're on auth pages, but not password reset pages
+            const currentPath = window.location.pathname;
+            if (
+              currentPath.includes("/login") ||
+              currentPath.includes("/register")
+            ) {
+              router.push("/");
             }
-            break;
-          case "SIGNED_OUT":
-            router.push("/login");
-            break;
-          case "TOKEN_REFRESHED":
-            console.log("Token refreshed");
-            break;
-        }
+            // Don't redirect if user is on forgot-password or reset-password pages
+            // These pages handle their own navigation
+          }
+          break;
+        case "SIGNED_OUT":
+          router.push("/login");
+          break;
+        case "TOKEN_REFRESHED":
+          console.log("Token refreshed");
+          break;
       }
-    );
+    });
 
     return () => {
       subscription.unsubscribe();
@@ -114,13 +120,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         console.error("Error signing out:", error);
         throw error;
       }
-      
+
       // Clear any stored data
       localStorage.removeItem("registrationEmail");
-      
+
       // Clean URL
       cleanUrl();
-      
+
       // Redirect to login after signout
       router.push("/login");
     } catch (error) {
@@ -138,9 +144,5 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     signOut,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
-}; 
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};

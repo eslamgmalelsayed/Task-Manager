@@ -5,14 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  CheckCircle,
-  X,
-  Lock,
-  Eye,
-  EyeOff,
-  Loader2,
-} from "lucide-react";
+import { CheckCircle, X, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { resetPasswordSchema, ResetPasswordFormData } from "@/types/auth";
 import AuthGuard from "@/components/AuthGuard";
@@ -42,8 +35,11 @@ export default function ResetPasswordPage() {
     const checkResetSession = async () => {
       try {
         // Check if we have a valid session for password reset
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
+        const {
+          data: { session },
+          error,
+        } = await supabase.auth.getSession();
+
         if (error) {
           console.error("Session error:", error);
           setIsValidSession(false);
@@ -85,7 +81,7 @@ export default function ResetPasswordPage() {
           type: "success",
           text: "Password updated successfully! You will be redirected to login.",
         });
-        
+
         // Sign out the user and redirect to login after successful password reset
         setTimeout(async () => {
           await supabase.auth.signOut();
@@ -122,7 +118,8 @@ export default function ResetPasswordPage() {
             Invalid or Expired Link
           </h2>
           <p className="text-gray-600 mb-6">
-            This password reset link is invalid or has expired. Please request a new one.
+            This password reset link is invalid or has expired. Please request a
+            new one.
           </p>
           <Link
             href="/forgot-password"
@@ -242,7 +239,9 @@ export default function ResetPasswordPage() {
                     {...register("confirmPassword")}
                     type={showConfirmPassword ? "text" : "password"}
                     className={`block w-full pl-10 pr-10 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                      errors.confirmPassword ? "border-red-300" : "border-gray-300"
+                      errors.confirmPassword
+                        ? "border-red-300"
+                        : "border-gray-300"
                     }`}
                     placeholder="Confirm new password"
                   />
@@ -288,4 +287,4 @@ export default function ResetPasswordPage() {
       </div>
     </AuthGuard>
   );
-} 
+}

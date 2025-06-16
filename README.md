@@ -11,13 +11,15 @@ Experience the full functionality of TaskFlow with our live demo. Create an acco
 ## ✨ Features
 
 ### 🔐 **Complete Authentication System**
+
 - **Email & Password** login/registration
-- **OAuth Integration** with Google & GitHub  
+- **OAuth Integration** with Google & GitHub
 - **Email Verification** for new accounts
 - **Password Reset** with secure email links
 - **User Profiles** with avatars and personalization
 
 ### 📝 **Advanced Todo Management**
+
 - **Create, Edit, Delete** todos with ease
 - **Mark Complete/Incomplete** with beautiful animations
 - **Real-time Updates** across all sessions
@@ -26,12 +28,14 @@ Experience the full functionality of TaskFlow with our live demo. Create an acco
 - **Creation & Update Timestamps** for tracking
 
 ### 📊 **Productivity Dashboard**
+
 - **Real-time Statistics** showing your progress
 - **Completion Rate** tracking and motivation
 - **Active vs Completed** todo counts
 - **Beautiful Data Visualization** with charts and metrics
 
 ### 🎨 **Modern User Experience**
+
 - **Responsive Design** that works on all devices
 - **Dark/Light Mode** adaptive interface
 - **Smooth Animations** and transitions
@@ -40,6 +44,7 @@ Experience the full functionality of TaskFlow with our live demo. Create an acco
 - **Loading States** and error handling
 
 ### 🔒 **Security & Performance**
+
 - **Row Level Security** with Supabase
 - **Protected Routes** and authentication guards
 - **Optimized Performance** with Next.js 15
@@ -137,12 +142,34 @@ This application is deployed on **Netlify** with automatic deployments from the 
 ## 📝 Available Scripts
 
 - `npm run dev` - Start development server
-- `npm run build` - Build for production  
+- `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint linting
 - `npm run lint:fix` - Fix ESLint errors automatically
 - `npm run format` - Format code with Prettier
 - `npm run format:check` - Check code formatting
+- `npm run pre-commit` - Run lint-staged (automatically runs on git commit)
+
+## 🔧 Code Quality & Git Hooks
+
+This project uses **Husky** and **lint-staged** to maintain code quality:
+
+### Git Hooks
+
+- **Pre-commit**: Automatically runs ESLint and Prettier on staged files
+- **Pre-push**: Runs full lint and format checks before pushing
+
+### What happens when you commit:
+
+1. 🔍 ESLint checks for code errors and fixes auto-fixable issues
+2. 🎨 Prettier formats your code automatically
+3. ✅ Commit proceeds only if no unfixable errors exist
+
+### What happens when you push:
+
+1. 🔍 Full ESLint check on entire codebase
+2. 🎨 Full format check on entire codebase
+3. 🚫 Push is blocked if any errors are found
 
 ## 🛠️ Database Setup
 

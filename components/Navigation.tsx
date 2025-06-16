@@ -18,18 +18,20 @@ export default function Navigation() {
 
   // Get user initials for avatar fallback
   const getUserInitials = (name: string, email: string) => {
-    if (name && name !== 'User') {
-      return name.split(' ')
+    if (name && name !== "User") {
+      return name
+        .split(" ")
         .map(word => word.charAt(0))
-        .join('')
+        .join("")
         .toUpperCase()
         .slice(0, 2);
     }
     return email.charAt(0).toUpperCase();
   };
 
-  const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
-  const userInitials = user ? getUserInitials(userName, user.email || '') : 'U';
+  const userName =
+    user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
+  const userInitials = user ? getUserInitials(userName, user.email || "") : "U";
 
   if (loading) {
     return (
@@ -41,7 +43,9 @@ export default function Navigation() {
                 <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                   <CheckCircle className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-xl font-bold text-gray-900">TaskFlow</span>
+                <span className="text-xl font-bold text-gray-900">
+                  TaskFlow
+                </span>
               </Link>
             </div>
             <div className="flex items-center">
@@ -76,30 +80,32 @@ export default function Navigation() {
                 >
                   Todos
                 </Link>
-                
-                                 <div className="flex items-center space-x-3">
-                   <div className="flex items-center space-x-3">
-                     {/* User Avatar */}
-                     <div className="relative">
-                       {user.user_metadata?.avatar_url ? (
-                         <Image
-                           src={user.user_metadata.avatar_url}
-                           alt={userName}
-                           width={32}
-                           height={32}
-                           className="w-8 h-8 rounded-full object-cover border-2 border-gray-200"
-                         />
-                       ) : (
-                         <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-medium">
-                           {userInitials}
-                         </div>
-                       )}
-                     </div>
-                     
-                     {/* User Name */}
-                     <span className="text-sm text-gray-700 font-medium">{userName}</span>
-                   </div>
-                  
+
+                <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-3">
+                    {/* User Avatar */}
+                    <div className="relative">
+                      {user.user_metadata?.avatar_url ? (
+                        <Image
+                          src={user.user_metadata.avatar_url}
+                          alt={userName}
+                          width={32}
+                          height={32}
+                          className="w-8 h-8 rounded-full object-cover border-2 border-gray-200"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-medium">
+                          {userInitials}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* User Name */}
+                    <span className="text-sm text-gray-700 font-medium">
+                      {userName}
+                    </span>
+                  </div>
+
                   <button
                     onClick={handleSignOut}
                     className="inline-flex items-center space-x-2 px-3 py-2 border border-transparent text-sm font-medium rounded-md text-gray-700 hover:text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
@@ -137,4 +143,4 @@ export default function Navigation() {
       </div>
     </nav>
   );
-} 
+}

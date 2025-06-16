@@ -4,13 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  CheckCircle,
-  X,
-  Mail,
-  Loader2,
-  ArrowLeft,
-} from "lucide-react";
+import { CheckCircle, X, Mail, Loader2, ArrowLeft } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { forgotPasswordSchema, ForgotPasswordFormData } from "@/types/auth";
 import AuthGuard from "@/components/AuthGuard";
@@ -39,7 +33,7 @@ export default function ForgotPasswordPage() {
     try {
       const redirectUrl = `${window.location.origin}/auth/callback?type=recovery&next=/reset-password`;
       console.log("Sending reset email with redirectTo:", redirectUrl);
-      
+
       const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
         redirectTo: redirectUrl,
       });
@@ -84,8 +78,8 @@ export default function ForgotPasswordPage() {
             Forgot your password?
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Enter your email address and we&apos;ll send you a link to reset your
-            password.
+            Enter your email address and we&apos;ll send you a link to reset
+            your password.
           </p>
         </div>
 
@@ -217,4 +211,4 @@ export default function ForgotPasswordPage() {
       </div>
     </AuthGuard>
   );
-} 
+}

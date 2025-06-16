@@ -37,8 +37,6 @@ export default function LandingPage() {
   );
 }
 
-
-
 function HeroSection() {
   return (
     <section className="py-20 lg:py-32 bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -130,7 +128,8 @@ function TodoStatsSection() {
       const total = todos.length;
       const completed = todos.filter(todo => todo.completed).length;
       const active = total - completed;
-      const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
+      const completionRate =
+        total > 0 ? Math.round((completed / total) * 100) : 0;
 
       setStats({ total, completed, active, completionRate });
     } catch (error) {
@@ -170,8 +169,12 @@ function TodoStatsSection() {
                   <ListTodo className="w-6 h-6 text-blue-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Total Todos</p>
-                  <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Total Todos
+                  </p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {stats.total}
+                  </p>
                 </div>
               </div>
             </div>
@@ -184,7 +187,9 @@ function TodoStatsSection() {
                 </div>
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Completed</p>
-                  <p className="text-2xl font-bold text-gray-900">{stats.completed}</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {stats.completed}
+                  </p>
                 </div>
               </div>
             </div>
@@ -197,7 +202,9 @@ function TodoStatsSection() {
                 </div>
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Active</p>
-                  <p className="text-2xl font-bold text-gray-900">{stats.active}</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {stats.active}
+                  </p>
                 </div>
               </div>
             </div>
@@ -209,8 +216,12 @@ function TodoStatsSection() {
                   <TrendingUp className="w-6 h-6 text-purple-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Completion Rate</p>
-                  <p className="text-2xl font-bold text-gray-900">{stats.completionRate}%</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    Completion Rate
+                  </p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {stats.completionRate}%
+                  </p>
                 </div>
               </div>
             </div>

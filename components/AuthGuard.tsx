@@ -9,16 +9,20 @@ interface AuthGuardProps {
   children: React.ReactNode;
 }
 
-export default function AuthGuard({ 
-  children 
-}: AuthGuardProps) {
+export default function AuthGuard({ children }: AuthGuardProps) {
   const { user, loading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const [isRedirecting, setIsRedirecting] = useState(false);
 
   // Define route categories
-  const authPages = ['/login', '/register', '/verify-email', '/forgot-password', '/reset-password'];
+  const authPages = [
+    "/login",
+    "/register",
+    "/verify-email",
+    "/forgot-password",
+    "/reset-password",
+  ];
 
   const isAuthPage = authPages.some(page => pathname.startsWith(page));
 
@@ -27,21 +31,21 @@ export default function AuthGuard({
 
     // Case 1: User not authenticated and not on auth pages → redirect to login
     if (!user && !isAuthPage) {
-      console.log('Redirecting to login: User not authenticated');
+      console.log("Redirecting to login: User not authenticated");
       setIsRedirecting(true);
       const timer = setTimeout(() => {
-        router.push('/login');
+        router.push("/login");
       }, 100);
       return () => clearTimeout(timer);
     }
 
     // Case 2: User authenticated but trying to access auth pages → redirect to home
     // Exception: Allow authenticated users on reset-password page (password recovery flow)
-    if (user && isAuthPage && !pathname.startsWith('/reset-password')) {
-      console.log('Redirecting to home: Authenticated user on auth page');
+    if (user && isAuthPage && !pathname.startsWith("/reset-password")) {
+      console.log("Redirecting to home: Authenticated user on auth page");
       setIsRedirecting(true);
       const timer = setTimeout(() => {
-        router.push('/');
+        router.push("/");
       }, 100);
       return () => clearTimeout(timer);
     }
@@ -74,7 +78,7 @@ export default function AuthGuard({
         <div className="text-center">
           <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
           <p className="text-gray-600">
-            {!user ? 'Redirecting to login...' : 'Redirecting to home...'}
+            {!user ? "Redirecting to login..." : "Redirecting to home..."}
           </p>
         </div>
       </div>
@@ -87,10 +91,14 @@ export default function AuthGuard({
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Authentication Required</h2>
-          <p className="text-gray-600 mb-4">You need to be logged in to access this page.</p>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+            Authentication Required
+          </h2>
+          <p className="text-gray-600 mb-4">
+            You need to be logged in to access this page.
+          </p>
           <button
-            onClick={() => router.push('/login')}
+            onClick={() => router.push("/login")}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors cursor-pointer"
           >
             Go to Login
@@ -102,15 +110,19 @@ export default function AuthGuard({
 
   // Block authenticated users from auth pages
   // Exception: Allow authenticated users on reset-password page (password recovery flow)
-  if (user && isAuthPage && !pathname.startsWith('/reset-password')) {
+  if (user && isAuthPage && !pathname.startsWith("/reset-password")) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Already Logged In</h2>
-          <p className="text-gray-600 mb-4">You&apos;re already authenticated.</p>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+            Already Logged In
+          </h2>
+          <p className="text-gray-600 mb-4">
+            You&apos;re already authenticated.
+          </p>
           <button
-            onClick={() => router.push('/')}
+            onClick={() => router.push("/")}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors cursor-pointer"
           >
             Go to Home
@@ -121,4 +133,4 @@ export default function AuthGuard({
   }
 
   return <>{children}</>;
-} 
+}
